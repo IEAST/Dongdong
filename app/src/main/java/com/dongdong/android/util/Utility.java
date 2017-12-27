@@ -2,10 +2,9 @@ package com.dongdong.android.util;
 
 import android.text.TextUtils;
 
-import com.example.administrator.coolweather.db.City;
-import com.example.administrator.coolweather.db.County;
-import com.example.administrator.coolweather.db.Province;
-
+import com.dongdong.android.db.City;
+import com.dongdong.android.db.County;
+import com.dongdong.android.db.Province;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,7 +17,7 @@ public class Utility {
     /**
      * 解析和处理服务器返回的省级数据
      */
-    public static boolean handlePronvinceResponse(String response){
+    public static boolean handleProvinceResponse(String response){
         if(!TextUtils.isEmpty(response)){
             try{
                 JSONArray allProvinces = new JSONArray(response);
@@ -27,6 +26,7 @@ public class Utility {
                     Province province = new Province();
                     province.setProvinceName(provinceObject.getString("name"));
                     province.setProvinceCode(provinceObject.getInt("id"));
+                    province.save();
                 }
                 return true;
             }catch (JSONException e){
@@ -71,7 +71,6 @@ public class Utility {
                     county.setWeatherId(countyObject.getString("weather_id"));
                    county.setCityId(cityId);
                     county.save();
-
                 }
                 return true;
             }catch (JSONException e){
